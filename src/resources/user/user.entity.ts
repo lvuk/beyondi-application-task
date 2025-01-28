@@ -11,6 +11,15 @@ export class User {
   @Column()
   password!: string;
 
-  @Column()
+  @Column({ nullable: true })
   name!: string;
+
+  // Define custom serialization behavior
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email,
+    };
+  }
 }

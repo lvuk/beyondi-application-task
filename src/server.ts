@@ -2,9 +2,11 @@ import 'reflect-metadata';
 import 'dotenv/config';
 import Fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import { userRoutes } from './resources/user/user.routes';
-import fastifySwaggerUi from '@fastify/swagger-ui';
+import { db, initializeDb } from './database.config';
+import { authRoutes } from './resources/auth/auth.routes';
 
 const fastify = Fastify({ logger: true });
+const PORT: number = Number(process.env.PORT) || 3000;
 
 //swagger
 fastify.register(import('@fastify/swagger'));
@@ -30,10 +32,12 @@ fastify.register(import('@fastify/swagger-ui'), {
   transformSpecificationClone: true,
 });
 
-//routes
-fastify.register(userRoutes);
+//database
+initializeDb();
 
-const PORT: number = Number(process.env.PORT) || 3000;
+//routes
+fastify.register(authRoutes);
+fastify.register(userRoutes);
 
 try {
   fastify.listen({ port: PORT });
