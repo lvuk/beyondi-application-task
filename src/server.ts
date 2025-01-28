@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import 'dotenv/config';
 import Fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import { userRoutes } from './resources/user/user.routes';
