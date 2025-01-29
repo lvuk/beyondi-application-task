@@ -1,4 +1,3 @@
-import { IErrorResponse } from './../../errors/error.interface';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { IRegisterUser, ILoginUser } from './auth.interface';
 import bcrypt from 'bcryptjs';
@@ -66,5 +65,7 @@ export const login = async (
     return reply.code(401).send(makeErrorResponse(401, 'Invalid password'));
   }
 
-  return reply.code(200).send({ message: 'User logged in' });
+  const token = request.server.jwt.sign({ user }, { expiresIn: '2h' });
+
+  return reply.code(200).send({ message: 'User logged in', token });
 };

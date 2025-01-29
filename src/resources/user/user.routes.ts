@@ -1,4 +1,4 @@
-import {
+import fastify, {
   FastifyInstance,
   FastifyPluginOptions,
   HookHandlerDoneFunction,
@@ -22,6 +22,7 @@ export const userRoutes = (
   options: FastifyPluginOptions,
   done: HookHandlerDoneFunction
 ) => {
+  fastify.addHook('onRequest', fastify.authenticate);
   //get all users
   fastify.get('/users', getAllUsersOpts);
   //get  user
