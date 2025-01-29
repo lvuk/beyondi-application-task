@@ -113,3 +113,51 @@ export const updateProduct = async (
 
   return reply.code(200).send(product);
 };
+
+//specific
+export const getUserProducts = async (
+  request: FastifyRequest<{ Params: { userId: number } }>,
+  reply: FastifyReply
+) => {
+  const userId = Number(request.params.userId);
+
+  if (isNaN(userId)) {
+    return reply.code(400).send(makeErrorResponse(400, 'Invalid user ID'));
+  }
+
+  const productRep = db.getRepository(Product);
+
+  const products = await productRep.find({
+    where: { user: { id: userId } },
+    relations: ['user'],
+  });
+
+  return reply.send(products);
+};
+
+export const getUserProduct = async (
+  request: FastifyRequest<{ Params: { userId: number; id: number } }>,
+  reply: FastifyReply
+) => {
+  const userId = Number(request.params.userId);
+  const productId = Number(request.params.id);
+
+  if (isNaN(userId) || isNaN(productId)) {
+    return reply
+      .code(400)
+      .send(makeErrorResponse(400, 'Invalid user or product ID'));
+  }
+
+  const productRep = db.getRepository(Product);
+
+  const product = await productRep.findOne({
+    where: { id: productId, user: { id: userId } },
+    relations: ['user'],
+  });
+
+  if (!product) {
+    return reply.code(404).send(makeErrorResponse(404, 'Product not found'));
+  }
+
+  return reply.send(product);
+};

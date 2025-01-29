@@ -6,7 +6,9 @@ import {
 import {
   deleteProductOpts,
   getAllProductsOpts,
+  getAllUserProductsOpts,
   getProductOpts,
+  getUserProductOpts,
   postProductOpts,
   updateProductOpts,
 } from './products.schema';
@@ -30,6 +32,11 @@ export const productRoutes = (
   fastify.delete('/products/:id', deleteProductOpts);
   //update product
   fastify.put('/products/:id', updateProductOpts);
+
+  //user products
+  fastify.get('/users/:userId/products', getAllUserProductsOpts);
+  //user product
+  fastify.get('/users/:userId/products/:id', getUserProductOpts);
 
   done();
 };

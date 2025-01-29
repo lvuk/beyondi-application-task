@@ -4,6 +4,8 @@ import {
   addProduct,
   deleteProduct,
   updateProduct,
+  getUserProducts,
+  getUserProduct,
 } from './products.controller';
 
 export const getAllProductsOpts = {
@@ -121,4 +123,49 @@ export const updateProductOpts = {
     },
   },
   handler: updateProduct,
+};
+
+export const getAllUserProductsOpts = {
+  schema: {
+    response: {
+      200: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            id: { type: 'number' },
+            name: { type: 'string' },
+            description: { type: 'string' },
+            image: { type: 'string' },
+            location: { type: 'string' },
+          },
+        },
+      },
+    },
+  },
+  handler: getUserProducts,
+};
+
+export const getUserProductOpts = {
+  schema: {
+    params: {
+      type: 'object',
+      properties: {
+        id: { type: 'number' },
+      },
+    },
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          id: { type: 'number' },
+          name: { type: 'string' },
+          description: { type: 'string' },
+          image: { type: 'string' },
+          location: { type: 'string' },
+        },
+      },
+    },
+  },
+  handler: getUserProduct,
 };
