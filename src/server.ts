@@ -4,6 +4,7 @@ import Fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import { userRoutes } from './resources/user/user.routes';
 import { db, initializeDb } from './database.config';
 import { authRoutes } from './resources/auth/auth.routes';
+import { productRoutes } from './resources/products/product.routes';
 
 const fastify = Fastify({ logger: true });
 const PORT: number = Number(process.env.PORT) || 3000;
@@ -38,7 +39,9 @@ initializeDb();
 //routes
 fastify.register(authRoutes);
 fastify.register(userRoutes);
+fastify.register(productRoutes);
 
+//start server
 try {
   fastify.listen({ port: PORT });
 } catch (err) {
