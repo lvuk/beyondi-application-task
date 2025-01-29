@@ -41,12 +41,12 @@ export const addProduct = async (
   const productRep = db.getRepository(Product);
   const { name, description, image, location } = request.body;
   const user = await getUserById(request.user.id, reply);
+  const user2 = await db.getRepository(User).findOneBy({ id: request.user.id });
 
   if (!user) {
     return reply.status(404).send(makeErrorResponse(404, 'User not found'));
   }
 
-  console.log(user);
   const product = productRep.create({
     name,
     description,
@@ -120,6 +120,8 @@ export const getUserProducts = async (
   reply: FastifyReply
 ) => {
   const userId = Number(request.params.userId);
+
+  console.log(request.user);
 
   if (isNaN(userId)) {
     return reply.code(400).send(makeErrorResponse(400, 'Invalid user ID'));

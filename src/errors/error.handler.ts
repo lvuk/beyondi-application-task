@@ -7,11 +7,9 @@ export const makeErrorResponse = (
   message: string
 ): IErrorResponse => {
   const errorResponse: IErrorResponse = {
-    error: {
-      statusCode: code,
-      status: StatusCodes[code],
-      message,
-    },
+    statusCode: code,
+    status: StatusCodes[code],
+    message,
   };
 
   return errorResponse;

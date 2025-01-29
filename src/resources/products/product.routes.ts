@@ -19,7 +19,6 @@ export const productRoutes = (
   options: FastifyPluginOptions,
   done: HookHandlerDoneFunction
 ) => {
-  fastify.addHook('preHandler', userExistsHook);
   fastify.addHook('onRequest', fastify.authenticate);
 
   //get all products

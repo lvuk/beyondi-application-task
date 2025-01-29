@@ -1,4 +1,4 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
+import fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import { IRegisterUser, ILoginUser } from './auth.interface';
 import bcrypt from 'bcryptjs';
 import { User } from '../user/user.entity';

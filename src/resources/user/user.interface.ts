@@ -1,5 +1,5 @@
 export interface IUserParams {
-  id: string;
+  id: number;
 }
 
 export interface IUserCreate {
