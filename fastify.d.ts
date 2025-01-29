@@ -9,4 +9,10 @@ declare module 'fastify' {
   }
 }
 
+declare module 'fastify' {
+  interface FastifyRequest {
+    user: IUser;
+  }
+}
+
 // export default fastify;

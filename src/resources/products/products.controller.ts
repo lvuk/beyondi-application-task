@@ -1,9 +1,10 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { db } from '../../database.config';
 import { Product } from './product.entity';
-import { Repository } from 'typeorm';
-import { IProductParams } from './product.interface';
+import { IProduct, IProductParams } from './product.interface';
 import { makeErrorResponse } from '../../errors/error.handler';
+import { getUserById } from '../user/user.service';
+import { User } from '../user/user.entity';
 
 export const getProducts = async (
   request: FastifyRequest,
@@ -31,4 +32,84 @@ export const getProduct = async (
   }
 
   return reply.send(product);
+};
+
+export const addProduct = async (
+  request: FastifyRequest<{ Body: IProduct }>,
+  reply: FastifyReply
+) => {
+  const productRep = db.getRepository(Product);
+  const { name, description, image, location } = request.body;
+  const user = await getUserById(request.user.id, reply);
+
+  if (!user) {
+    return reply.status(404).send(makeErrorResponse(404, 'User not found'));
+  }
+
+  console.log(user);
+  const product = productRep.create({
+    name,
+    description,
+    image,
+    location,
+    user,
+  });
+
+  await productRep.save(product);
+  return reply.code(201).send(product);
+};
+
+export const deleteProduct = async (
+  request: FastifyRequest<{ Params: IProductParams }>,
+  reply: FastifyReply
+) => {
+  const productRep = db.getRepository(Product);
+  const { id } = request.params;
+  const product = await productRep.findOne({
+    where: { id },
+    relations: ['user'],
+  });
+
+  console.log(request.user);
+  console.log(product);
+
+  if (!product)
+    return reply.code(404).send(makeErrorResponse(404, 'Product not found'));
+
+  if (product.user.id !== request.user.id) {
+    return reply.code(403).send(makeErrorResponse(403, 'Unauthorized'));
+  }
+
+  await productRep.delete({ id });
+  return reply.send({ message: `Product with ID:${id} successfully deleted` });
+};
+
+export const updateProduct = async (
+  request: FastifyRequest<{ Params: IProductParams; Body: IProduct }>,
+  reply: FastifyReply
+) => {
+  const productRep = db.getRepository(Product);
+  const { id } = request.params;
+  const { name, description, image, location } = request.body;
+
+  const product = await productRep.findOne({
+    where: { id },
+    relations: ['user'],
+  });
+
+  if (!product)
+    return reply.code(404).send(makeErrorResponse(404, 'Product not found'));
+
+  if (product.user.id !== request.user.id) {
+    return reply.code(403).send(makeErrorResponse(403, 'Unauthorized'));
+  }
+
+  product.name = name ?? product.name;
+  product.description = description ?? product.description;
+  product.image = image ?? product.image;
+  product.location = location ?? product.location;
+
+  await productRep.save(product);
+
+  return reply.code(200).send(product);
 };
