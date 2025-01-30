@@ -2,7 +2,7 @@ import { Role } from './../user/user.entity';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { db } from '../../database.config';
 import { Product } from './product.entity';
-import { IProduct, IProductParams } from './product.interface';
+import { IProduct } from './product.interface';
 import { makeErrorResponse } from '../../errors/error.handler';
 import { User } from '../user/user.entity';
 import { Address } from '../address/address.entity';
@@ -21,7 +21,7 @@ export const getProducts = async (
 };
 
 export const getProduct = async (
-  request: FastifyRequest<{ Params: IProductParams }>,
+  request: FastifyRequest<{ Params: { id: number } }>,
   reply: FastifyReply
 ) => {
   const productRep = db.getRepository(Product);
@@ -78,7 +78,7 @@ export const addProduct = async (
 };
 
 export const deleteProduct = async (
-  request: FastifyRequest<{ Params: IProductParams }>,
+  request: FastifyRequest<{ Params: { id: number } }>,
   reply: FastifyReply
 ) => {
   const productRep = db.getRepository(Product);
@@ -100,7 +100,7 @@ export const deleteProduct = async (
 };
 
 export const updateProduct = async (
-  request: FastifyRequest<{ Params: IProductParams; Body: IProduct }>,
+  request: FastifyRequest<{ Params: { id: number }; Body: IProduct }>,
   reply: FastifyReply
 ) => {
   const productRep = db.getRepository(Product);
