@@ -5,7 +5,7 @@ import { userRoutes } from './resources/user/user.routes';
 import { initializeDb } from './database.config';
 import { authRoutes } from './resources/auth/auth.routes';
 import { productRoutes } from './resources/products/product.routes';
-import jwtPlugin from './plugins/jwt';
+import jwtPlugin from './plugins/jwt.plugin';
 import autoload from '@fastify/autoload';
 import path from 'path';
 import { addressRoutes } from './resources/address/address.routes';

@@ -14,7 +14,13 @@ export class User {
   password!: string;
 
   @Column({ nullable: true })
-  name!: string;
+  firstName!: string;
+
+  @Column({ nullable: true })
+  lastName!: string;
+
+  @Column({ nullable: true })
+  aboutMe!: string;
 
   @OneToMany(() => Product, (product) => product.user, {
     onDelete: 'CASCADE',
@@ -32,7 +38,9 @@ export class User {
   toJSON() {
     return {
       id: this.id,
-      name: this.name,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      aboutMe: this.aboutMe,
       email: this.email,
     };
   }

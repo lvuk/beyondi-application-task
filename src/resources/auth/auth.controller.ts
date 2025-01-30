@@ -11,6 +11,7 @@ export const register = async (
 ) => {
   const { email, password, repeatPassword } = request.body;
   const userRep = db.getRepository(User);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const user: User | null = await userRep.findOneBy({ email });
 
@@ -24,6 +25,9 @@ export const register = async (
       .code(400)
       .send(makeErrorResponse(400, 'All fields are required'));
   }
+
+  if (emailRegex.test(email) === false)
+    return reply.code(400).send(makeErrorResponse(400, 'Invalid email'));
 
   if (password !== repeatPassword) {
     return reply

@@ -2,7 +2,9 @@ export const UserSchemaModel = {
   type: 'object',
   properties: {
     id: { type: 'string' },
-    name: { type: 'string' },
+    firstName: { type: 'string' },
+    lastName: { type: 'string' },
+    aboutMe: { type: 'string' },
     email: { type: 'string' },
   },
 };
