@@ -36,3 +36,25 @@ export const AddressSchemaModel = {
     label: { type: 'string' },
   },
 };
+
+export const ProductSchemaModel = {
+  type: 'object',
+  properties: {
+    id: { type: 'number' },
+    name: { type: 'string' },
+    description: { type: 'string' },
+    image: { type: 'string' },
+    location: { type: 'string' },
+    address: {
+      type: 'object',
+      properties: {
+        id: { type: 'number' },
+        street: { type: 'string' },
+        city: { type: 'string' },
+        country: { type: 'string' },
+        zip: { type: 'string' },
+        label: { type: 'string' },
+      },
+    },
+  },
+};

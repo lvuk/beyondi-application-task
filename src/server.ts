@@ -14,7 +14,9 @@ const fastify = Fastify({ logger: true });
 const PORT: number = Number(process.env.PORT) || 3000;
 
 //plugins
-fastify.register(jwtPlugin);
+fastify.register(autoload, {
+  dir: path.join(__dirname, 'plugins'),
+});
 //swagger
 fastify.register(import('@fastify/swagger'));
 fastify.register(import('@fastify/swagger-ui'), {
@@ -38,6 +40,8 @@ fastify.register(import('@fastify/swagger-ui'), {
   },
   transformSpecificationClone: true,
 });
+
+console.log(path.join(__dirname, 'plugins'));
 
 //database
 initializeDb();

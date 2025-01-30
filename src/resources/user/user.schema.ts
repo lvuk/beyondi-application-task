@@ -42,6 +42,7 @@ export const updateUserOpts = {
   schema: {
     response: {
       200: UserSchemaModel,
+      403: ErrorSchemaModel,
       404: ErrorSchemaModel,
     },
   },

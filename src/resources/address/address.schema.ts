@@ -18,6 +18,7 @@ export const getAllUserAddressesOpts = {
         type: 'array',
         items: AddressSchemaModel,
       },
+      400: ErrorSchemaModel,
       404: ErrorSchemaModel,
       403: ErrorSchemaModel,
     },
@@ -63,6 +64,7 @@ export const deleteAddressOpts = {
   schema: {
     response: {
       200: DefaultDeletionSchemaModel,
+      400: ErrorSchemaModel,
       404: ErrorSchemaModel,
       403: ErrorSchemaModel,
     },
@@ -75,6 +77,7 @@ export const updateAddressOpts = {
     body: AddressSchemaModel,
     response: {
       200: AddressSchemaModel,
+      400: ErrorSchemaModel,
       404: ErrorSchemaModel,
       403: ErrorSchemaModel,
     },

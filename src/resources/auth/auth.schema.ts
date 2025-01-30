@@ -1,18 +1,10 @@
-import { ErrorSchemaModel } from '../../models';
+import { ErrorSchemaModel, UserSchemaModel } from '../../models';
 import {
   register,
   login,
   requestPasswordReset,
   resetPassword,
 } from './auth.controller';
-
-const userSchema = {
-  type: 'object',
-  properties: {
-    id: { type: 'string' },
-    email: { type: 'string' },
-  },
-};
 
 export const registerOpts = {
   schema: {
@@ -26,7 +18,8 @@ export const registerOpts = {
       },
     },
     response: {
-      200: userSchema,
+      200: UserSchemaModel,
+      400: ErrorSchemaModel,
     },
   },
   handler: register,
@@ -50,6 +43,8 @@ export const loginOpts = {
           token: { type: 'string' },
         },
       },
+      401: ErrorSchemaModel,
+      404: ErrorSchemaModel,
     },
   },
   handler: login,
@@ -71,6 +66,7 @@ export const requestPasswordResetOpts = {
           message: { type: 'string' },
         },
       },
+      400: ErrorSchemaModel,
       404: ErrorSchemaModel,
     },
   },

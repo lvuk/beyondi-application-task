@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from '../user/user.entity';
+import { Address } from '../address/address.entity';
 
 @Entity()
 export class Product {
@@ -21,8 +22,11 @@ export class Product {
   @Column()
   image!: string;
 
-  @Column()
-  location!: string;
+  @ManyToOne(() => Address, (address) => address.products, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'addressId' })
+  address!: Address;
 
   @ManyToOne(() => User, (user) => user.products, {
     onDelete: 'CASCADE',

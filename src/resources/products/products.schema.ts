@@ -1,3 +1,4 @@
+import { ErrorSchemaModel, ProductSchemaModel } from '../../models';
 import {
   getProducts,
   getProduct,
@@ -13,16 +14,7 @@ export const getAllProductsOpts = {
     response: {
       200: {
         type: 'array',
-        items: {
-          type: 'object',
-          properties: {
-            id: { type: 'number' },
-            name: { type: 'string' },
-            description: { type: 'string' },
-            image: { type: 'string' },
-            location: { type: 'string' },
-          },
-        },
+        items: ProductSchemaModel,
       },
     },
   },
@@ -38,16 +30,8 @@ export const getProductOpts = {
       },
     },
     response: {
-      200: {
-        type: 'object',
-        properties: {
-          id: { type: 'number' },
-          name: { type: 'string' },
-          description: { type: 'string' },
-          image: { type: 'string' },
-          location: { type: 'string' },
-        },
-      },
+      200: ProductSchemaModel,
+      404: ErrorSchemaModel,
     },
   },
   handler: getProduct,
@@ -66,16 +50,9 @@ export const postProductOpts = {
       },
     },
     response: {
-      201: {
-        type: 'object',
-        properties: {
-          id: { type: 'number' },
-          name: { type: 'string' },
-          description: { type: 'string' },
-          image: { type: 'string' },
-          location: { type: 'string' },
-        },
-      },
+      201: ProductSchemaModel,
+      400: ErrorSchemaModel,
+      404: ErrorSchemaModel,
     },
   },
   handler: addProduct,
@@ -96,6 +73,8 @@ export const deleteProductOpts = {
           message: { type: 'string' },
         },
       },
+      403: ErrorSchemaModel,
+      404: ErrorSchemaModel,
     },
   },
   handler: deleteProduct,
@@ -113,16 +92,9 @@ export const updateProductOpts = {
       },
     },
     response: {
-      200: {
-        type: 'object',
-        properties: {
-          id: { type: 'number' },
-          name: { type: 'string' },
-          description: { type: 'string' },
-          image: { type: 'string' },
-          location: { type: 'string' },
-        },
-      },
+      200: ProductSchemaModel,
+      404: ErrorSchemaModel,
+      403: ErrorSchemaModel,
     },
   },
   handler: updateProduct,
@@ -133,17 +105,9 @@ export const getAllUserProductsOpts = {
     response: {
       200: {
         type: 'array',
-        items: {
-          type: 'object',
-          properties: {
-            id: { type: 'number' },
-            name: { type: 'string' },
-            description: { type: 'string' },
-            image: { type: 'string' },
-            location: { type: 'string' },
-          },
-        },
+        items: ProductSchemaModel,
       },
+      400: ErrorSchemaModel,
     },
   },
   handler: getUserProducts,
@@ -158,16 +122,9 @@ export const getUserProductOpts = {
       },
     },
     response: {
-      200: {
-        type: 'object',
-        properties: {
-          id: { type: 'number' },
-          name: { type: 'string' },
-          description: { type: 'string' },
-          image: { type: 'string' },
-          location: { type: 'string' },
-        },
-      },
+      200: ProductSchemaModel,
+      400: ErrorSchemaModel,
+      404: ErrorSchemaModel,
     },
   },
   handler: getUserProduct,

@@ -7,4 +7,5 @@ export interface IProduct {
   description: string;
   image: string;
   location: string;
+  labelAddr: string;
 }

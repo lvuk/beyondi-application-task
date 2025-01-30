@@ -11,7 +11,6 @@ export const getUsers = async (
   reply: FastifyReply
 ) => {
   const users = await db.getRepository('User').find();
-  console.log(users);
   return reply.code(200).send(users);
 };
 

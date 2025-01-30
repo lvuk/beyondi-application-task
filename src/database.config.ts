@@ -18,9 +18,6 @@ export async function initializeDb() {
     console.log('Initializing the database...');
     await db.initialize();
     console.log('Database connection established');
-
-    // Your application logic here
-    // You can now interact with the DB using AppDataSource.getRepository(User), etc.
   } catch (error) {
     console.error('Error during data source initialization:', error);
   }
