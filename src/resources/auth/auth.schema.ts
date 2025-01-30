@@ -1,4 +1,10 @@
-import { register, login } from './auth.controller';
+import { ErrorSchemaModel } from '../../models';
+import {
+  register,
+  login,
+  requestPasswordReset,
+  resetPassword,
+} from './auth.controller';
 
 const userSchema = {
   type: 'object',
@@ -47,4 +53,50 @@ export const loginOpts = {
     },
   },
   handler: login,
+};
+
+export const requestPasswordResetOpts = {
+  schema: {
+    body: {
+      type: 'object',
+      required: ['email'],
+      properties: {
+        email: { type: 'string' },
+      },
+    },
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          message: { type: 'string' },
+        },
+      },
+      404: ErrorSchemaModel,
+    },
+  },
+  handler: requestPasswordReset,
+};
+
+export const passwordResetOpts = {
+  schema: {
+    body: {
+      type: 'object',
+      required: ['email', 'resetCode', 'password', 'repeatPassword'],
+      properties: {
+        email: { type: 'string' },
+        resetCode: { type: 'string' },
+        password: { type: 'string' },
+        repeatPassword: { type: 'string' },
+      },
+    },
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          message: { type: 'string' },
+        },
+      },
+    },
+  },
+  handler: resetPassword,
 };

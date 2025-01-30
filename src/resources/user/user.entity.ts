@@ -22,6 +22,12 @@ export class User {
   @Column({ nullable: true })
   aboutMe!: string;
 
+  @Column({ nullable: true })
+  resetCode?: string;
+
+  @Column({ nullable: true, type: 'timestamp' })
+  resetCodeExpires?: Date;
+
   @OneToMany(() => Product, (product) => product.user, {
     onDelete: 'CASCADE',
     cascade: true,
