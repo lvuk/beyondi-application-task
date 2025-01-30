@@ -103,10 +103,13 @@ export const deleteProductOpts = {
 
 export const updateProductOpts = {
   schema: {
-    params: {
+    body: {
       type: 'object',
       properties: {
-        id: { type: 'number' },
+        name: { type: 'string' },
+        description: { type: 'string' },
+        image: { type: 'string' },
+        location: { type: 'string' },
       },
     },
     response: {

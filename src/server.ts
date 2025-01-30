@@ -8,6 +8,7 @@ import { productRoutes } from './resources/products/product.routes';
 import jwtPlugin from './plugins/jwt';
 import autoload from '@fastify/autoload';
 import path from 'path';
+import { addressRoutes } from './resources/address/address.routes';
 
 const fastify = Fastify({ logger: true });
 const PORT: number = Number(process.env.PORT) || 3000;
@@ -45,6 +46,7 @@ initializeDb();
 fastify.register(authRoutes);
 fastify.register(userRoutes);
 fastify.register(productRoutes);
+fastify.register(addressRoutes);
 
 //start server
 try {

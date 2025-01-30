@@ -12,7 +12,6 @@ import {
   postProductOpts,
   updateProductOpts,
 } from './products.schema';
-import { userExistsHook } from '../user/user.hooks';
 
 export const productRoutes = (
   fastify: FastifyInstance,

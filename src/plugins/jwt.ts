@@ -19,7 +19,7 @@ export default fp(async function (fastify: FastifyInstance) {
     async function (request: FastifyRequest, reply: FastifyReply) {
       try {
         await request.jwtVerify();
-        // console.log(request.user);
+        console.log(request.user);
         request.user = request.user.user;
       } catch (err) {
         reply.code(401).send(makeErrorResponse(401, 'Unauthorized'));
