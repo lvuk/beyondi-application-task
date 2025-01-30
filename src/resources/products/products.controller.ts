@@ -1,3 +1,4 @@
+import { Role } from './../user/user.entity';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { db } from '../../database.config';
 import { Product } from './product.entity';
@@ -12,7 +13,9 @@ export const getProducts = async (
 ) => {
   const productRep = db.getRepository(Product);
 
-  const products = await productRep.find();
+  const products = await productRep.find({
+    relations: ['user', 'address'],
+  });
 
   return reply.send(products);
 };
@@ -30,6 +33,10 @@ export const getProduct = async (
   if (!product) {
     return reply.status(404).send(makeErrorResponse(404, 'Product not found'));
   }
+
+  //Role check
+  if (request.user.role === Role.USER && product.user.id !== request.user.id)
+    return reply.code(403).send(makeErrorResponse(403, 'Unauthorized'));
 
   return reply.send(product);
 };
@@ -144,6 +151,10 @@ export const getUserProducts = async (
     relations: ['user', 'address'],
   });
 
+  //Role check
+  if (request.user.role === Role.USER && request.user.id !== userId)
+    return reply.code(403).send(makeErrorResponse(403, 'Unauthorized'));
+
   return reply.code(200).send(products);
 };
 
@@ -170,6 +181,9 @@ export const getUserProduct = async (
   if (!product) {
     return reply.code(404).send(makeErrorResponse(404, 'Product not found'));
   }
+
+  if (request.user.role === Role.USER && request.user.id !== product.user.id)
+    return reply.code(403).send(makeErrorResponse(403, 'Unauthorized'));
 
   return reply.code(200).send(product);
 };

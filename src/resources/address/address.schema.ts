@@ -1,15 +1,46 @@
+import { checkRole } from '../../hooks/auth.hooks';
 import {
   AddressSchemaModel,
   DefaultDeletionSchemaModel,
   ErrorSchemaModel,
 } from '../../models';
+import { Role } from '../user/user.entity';
 import {
   addAddress,
   deleteAddress,
+  getAddress,
+  getAddresses,
   getAllUserAddresses,
   getUserAddress,
   updateAddress,
 } from './address.controller';
+
+export const getAddressesOpts = {
+  schema: {
+    response: {
+      200: {
+        type: 'array',
+        items: { ...AddressSchemaModel },
+      },
+      400: ErrorSchemaModel,
+      404: ErrorSchemaModel,
+      403: ErrorSchemaModel,
+    },
+  },
+  preHandler: checkRole(Role.ADMIN),
+  handler: getAddresses,
+};
+
+export const getAddressOpts = {
+  schema: {
+    response: {
+      200: AddressSchemaModel,
+      404: ErrorSchemaModel,
+      403: ErrorSchemaModel,
+    },
+  },
+  handler: getAddress,
+};
 
 export const getAllUserAddressesOpts = {
   schema: {

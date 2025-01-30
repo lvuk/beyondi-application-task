@@ -34,6 +34,7 @@ export const AddressSchemaModel = {
     country: { type: 'string' },
     zip: { type: 'string' },
     label: { type: 'string' },
+    user: UserSchemaModel,
   },
 };
 
@@ -45,6 +46,7 @@ export const ProductSchemaModel = {
     description: { type: 'string' },
     image: { type: 'string' },
     location: { type: 'string' },
+    user: UserSchemaModel,
     address: {
       type: 'object',
       properties: {

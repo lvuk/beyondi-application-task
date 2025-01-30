@@ -1,3 +1,4 @@
+import { createHook } from 'async_hooks';
 import { ErrorSchemaModel, ProductSchemaModel } from '../../models';
 import {
   getProducts,
@@ -8,6 +9,8 @@ import {
   getUserProducts,
   getUserProduct,
 } from './products.controller';
+import { checkRole } from '../../hooks/auth.hooks';
+import { Role } from '../user/user.entity';
 
 export const getAllProductsOpts = {
   schema: {
@@ -18,6 +21,7 @@ export const getAllProductsOpts = {
       },
     },
   },
+  preHandler: checkRole(Role.ADMIN),
   handler: getProducts,
 };
 

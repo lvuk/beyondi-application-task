@@ -13,7 +13,8 @@ import { addressRoutes } from './resources/address/address.routes';
 const fastify = Fastify({ logger: true });
 const PORT: number = Number(process.env.PORT) || 3000;
 
-//plugins
+// //plugins
+// fastify.register(jwtPlugin);
 fastify.register(autoload, {
   dir: path.join(__dirname, 'plugins'),
 });
@@ -40,8 +41,6 @@ fastify.register(import('@fastify/swagger-ui'), {
   },
   transformSpecificationClone: true,
 });
-
-console.log(path.join(__dirname, 'plugins'));
 
 //database
 initializeDb();

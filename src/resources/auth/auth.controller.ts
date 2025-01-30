@@ -61,6 +61,8 @@ export const login = async (
     return reply.code(404).send(makeErrorResponse(404, 'User not found'));
   }
 
+  console.log(user);
+
   const isPasswordValid: boolean = await bcrypt.compare(
     password,
     user.password
@@ -70,7 +72,7 @@ export const login = async (
     return reply.code(401).send(makeErrorResponse(401, 'Invalid password'));
   }
 
-  const token = request.server.jwt.sign({ user }, { expiresIn: '2h' });
+  const token: string = request.server.jwt.sign({ user }, { expiresIn: '2h' });
 
   return reply.code(200).send({ message: 'User logged in', token });
 };

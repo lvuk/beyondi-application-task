@@ -1,8 +1,41 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { makeErrorResponse } from '../../errors/error.handler';
 import { db } from '../../database.config';
-import { User } from '../user/user.entity';
+import { Role, User } from '../user/user.entity';
 import { Address } from './address.entity';
+
+export const getAddresses = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  const addresses = await db.getRepository(Address).find({
+    relations: ['user'],
+  });
+
+  return reply.send(addresses);
+};
+
+export const getAddress = async (
+  request: FastifyRequest<{ Params: { id: number } }>,
+  reply: FastifyReply
+) => {
+  const addressId = Number(request.params.id);
+  const address = await db.getRepository(Address).findOne({
+    where: { id: addressId },
+    relations: ['user'],
+  });
+
+  if (isNaN(addressId))
+    return reply.code(400).send(makeErrorResponse(400, 'Invalid address ID'));
+
+  if (!address)
+    return reply.code(404).send(makeErrorResponse(404, 'Address not found'));
+
+  if (request.user.role === Role.USER && address.user.id !== request.user.id)
+    return reply.code(403).send(makeErrorResponse(403, 'Unauthorized'));
+
+  return reply.send(address);
+};
 
 export const getAllUserAddresses = async (
   request: FastifyRequest<{ Params: { userId: number } }>,
@@ -25,6 +58,9 @@ export const getAllUserAddresses = async (
     relations: ['user'],
   });
 
+  if (request.user.role === Role.USER && userId !== request.user.id)
+    return reply.code(403).send(makeErrorResponse(403, 'Unauthorized'));
+
   return reply.send(addresses);
 };
 
@@ -45,11 +81,12 @@ export const getUserAddress = async (
     return reply
       .code(400)
       .send(makeErrorResponse(400, 'Invalid user or address ID'));
-
   if (!user)
     return reply.code(404).send(makeErrorResponse(404, 'User not found'));
   if (!address)
     return reply.code(404).send(makeErrorResponse(404, 'Address not found'));
+  if (request.user.role === Role.USER && user.id !== request.user.id)
+    return reply.code(403).send(makeErrorResponse(403, 'Unauthorized'));
 
   return reply.send(address);
 };

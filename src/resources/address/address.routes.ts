@@ -9,6 +9,8 @@ import {
   getUserAddressOpts,
   postAddressOpts,
   updateAddressOpts,
+  getAddressesOpts,
+  getAddressOpts,
 } from './address.schema';
 
 export const addressRoutes = (
@@ -18,6 +20,10 @@ export const addressRoutes = (
 ) => {
   fastify.addHook('onRequest', fastify.authenticate);
 
+  //get all addresses
+  fastify.get('/addresses', getAddressesOpts);
+  // get single address
+  fastify.get('/addresses/:id', getAddressOpts);
   //get all user addresses
   fastify.get('/users/:userId/addresses', getAllUserAddressesOpts);
   //get user address

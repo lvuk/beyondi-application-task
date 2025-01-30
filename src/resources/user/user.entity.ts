@@ -2,6 +2,11 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Product } from '../products/product.entity';
 import { Address } from '../address/address.entity';
 
+export enum Role {
+  ADMIN = 'admin',
+  USER = 'user',
+}
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -21,6 +26,9 @@ export class User {
 
   @Column({ nullable: true })
   aboutMe!: string;
+
+  @Column({ type: 'enum', enum: Role, default: Role.USER })
+  role!: Role;
 
   @Column({ nullable: true })
   resetCode?: string;
@@ -44,10 +52,11 @@ export class User {
   toJSON() {
     return {
       id: this.id,
+      email: this.email,
+      role: this.role,
       firstName: this.firstName,
       lastName: this.lastName,
       aboutMe: this.aboutMe,
-      email: this.email,
     };
   }
 }

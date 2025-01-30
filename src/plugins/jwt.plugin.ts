@@ -20,6 +20,7 @@ export default fp(async function (fastify: FastifyInstance) {
       try {
         await request.jwtVerify();
         request.user = request.user.user;
+        console.log('JWT auth hook', request.user);
       } catch (err) {
         reply.code(401).send(makeErrorResponse(401, 'Unauthorized'));
       }
