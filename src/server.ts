@@ -9,6 +9,7 @@ import jwtPlugin from './plugins/jwt.plugin';
 import autoload from '@fastify/autoload';
 import path from 'path';
 import { addressRoutes } from './resources/address/address.routes';
+import { metricsRoutes } from './resources/metrics/metrics.routes';
 
 const fastify = Fastify({ logger: true });
 const PORT: number = Number(process.env.PORT) || 3000;
@@ -50,6 +51,7 @@ fastify.register(authRoutes);
 fastify.register(userRoutes);
 fastify.register(productRoutes);
 fastify.register(addressRoutes);
+fastify.register(metricsRoutes);
 
 //start server
 try {
