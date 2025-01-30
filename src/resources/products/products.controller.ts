@@ -3,7 +3,6 @@ import { db } from '../../database.config';
 import { Product } from './product.entity';
 import { IProduct, IProductParams } from './product.interface';
 import { makeErrorResponse } from '../../errors/error.handler';
-import { getUserById } from '../user/user.service';
 import { User } from '../user/user.entity';
 
 export const getProducts = async (
@@ -40,8 +39,7 @@ export const addProduct = async (
 ) => {
   const productRep = db.getRepository(Product);
   const { name, description, image, location } = request.body;
-  const user = await getUserById(request.user.id, reply);
-  const user2 = await db.getRepository(User).findOneBy({ id: request.user.id });
+  const user = await db.getRepository(User).findOneBy({ id: request.user.id });
 
   if (!user) {
     return reply.status(404).send(makeErrorResponse(404, 'User not found'));

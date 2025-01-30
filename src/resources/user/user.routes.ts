@@ -9,7 +9,6 @@ import {
   deleteUserOpts,
   updateUserOpts,
 } from './user.schema';
-import { userExistsHook } from './user.hooks';
 
 export let users = [
   { id: '1', name: 'Alice', email: 'alice@alice.com' },
