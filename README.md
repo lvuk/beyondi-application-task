@@ -39,7 +39,7 @@
 > Blockchain is better from traditional systems as I said above removes trust as a factor when dealing with something, because there is no one individual that is controlling the whole network.
 > It is also better because it is all transparent in a blockchain due to its immutability. In monetary terms it gives an ability for people to transfer money between themselves without intermediary 24/7.
 
-> Drawbacks of blockchain is it is not so scalable, for example in Ethereum blockchain the process of verifying transactions can be slower, about 15 tx/s. So systems could struggle and could struggle to handle high volume. Some other drawback is power consumption in Bitcoin, because of its Proof of Work it needs high computational power which increase power consumption
+> Drawbacks of blockchain is it is not so scalable, for example in Ethereum blockchain the process of verifying transactions can be slower, about 15 tx/s. So systems could struggle to handle high volume. Some other drawback is power consumption in Bitcoin, because of its Proof of Work it needs high computational power which increase power consumption
 
 5. Please describe the last technical article which you read and how you stay up to date with community news and information on a daily basis. What are the topics you follow?
 
