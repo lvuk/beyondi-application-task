@@ -42,6 +42,7 @@
 > Drawbacks of blockchain is it is not so scalable, for example in Ethereum blockchain the process of verifying transactions can be slower, about 15 tx/s. So systems could struggle and could struggle to handle high volume. Some other drawback is power consumption in Bitcoin, because of its Proof of Work it needs high computational power which increase power consumption
 
 5. Please describe the last technical article which you read and how you stay up to date with community news and information on a daily basis. What are the topics you follow?
-   > The last technical article I read was about how to use debouncer in iOS application and how to do it. So the in simple ways debouncer enables us to not call backend everytime user types a letter. It calls backend only if user stops typing for some specified amount of time.
+
+> The last technical article I read was about how to use debouncer in iOS application and how to do it. So the in simple ways debouncer enables us to not call backend everytime user types a letter. It calls backend only if user stops typing for some specified amount of time.
 
 > I am using `daily.dev` as my tech forum where I read thing about development and software engineer. Also I use twitter to stay up with updates about cryptocurrencies and stocks. Topics I mostly follwed are: SD(backend, iOS), cryptocurrencies, stocks,
